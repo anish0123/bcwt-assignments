@@ -1,4 +1,4 @@
 # Basic Concepts of Web Technology Assignments
 
-## Anish Maharjan\n
+## Anish Maharjan
 ## Student Number: 2112925

@@ -15,4 +15,3 @@ let output = "Just testing nodemon, using lodast to convert " +
 console.log(output);
 output = _.camelCase(output);
 console.log(output);
-
