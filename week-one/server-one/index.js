@@ -1,5 +1,6 @@
 'use strict';
 
+const { response } = require('express');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -7,6 +8,7 @@ const port = 3000;
 let requestCounter = 0;
 
 app.use(express.static('public'));
+app.set('view engine', 'pug');
 
 /**
 app.get('/', (req, res) => {
@@ -27,7 +29,16 @@ app.get('/catinfo',(req, res) => {
 app.get('/test',(req, res) => {
     requestCounter++;
     console.log('trying the test page.');
-    res.send('<h1>Hello Test</h1><p>' + requestCounter + '</p>');
+    //Example of using pug
+    res.render('test',{
+        title: "Pug test page",
+        header1: "Pug Test Page",
+        header2: "Counter",
+        exampleText: "Page requested " + requestCounter + " times.",
+    });
+    //basic html as string
+    //res.send('<h1>Hello Test</h1><p>' + requestCounter + '</p>');
+
 });
 
 app.listen(port, () => {
