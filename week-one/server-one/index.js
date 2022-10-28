@@ -3,7 +3,7 @@
 const { response } = require('express');
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 4000;
 
 let requestCounter = 0;
 
@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
   requestCounter = 0;
 });
 */
+//Testing the pug
+app.get('/', (req, res) => {
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
+})
 
 app.get('/catinfo',(req, res) => {
     const cat = {
