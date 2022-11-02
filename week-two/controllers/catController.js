@@ -2,11 +2,10 @@
 // catController
 const catModel = require('../models/catModel');
 
-const cats = catModel.cats;
-
 //For getting whole array of cats
-const getCats = (req, res) => {
-res.json(cats);
+const getCats = async (req, res) => {
+    const cats = await catModel.getAllCats();
+    res.json(cats);
 };
 
 //For getting a single cat and letting user know if there is none
