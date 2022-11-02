@@ -5,6 +5,7 @@ const catRouter = require('./routes/catRoute');
 const userRouter = require('./routes/userRoute');
 const port = 3000;
 
+//For getting cat
 app.use('/cat', catRouter);
 
 //FOR getting user
