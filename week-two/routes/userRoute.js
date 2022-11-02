@@ -11,5 +11,9 @@ router.get('/', userController.getUsers);
 //FOR getting single user
 router.get('/:userId', userController.getUser);
 
+router.post('/', userController.createUser);
+
+router.put('/', userController.modifyUser);
+
 
 module.exports = router;

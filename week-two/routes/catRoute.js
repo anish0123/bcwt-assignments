@@ -2,7 +2,10 @@
 // catRoute
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const catController = require('../controllers/catController');
+
+const upload = multer({dest: 'uploads/'});
 
 //For GET
 router.get('/', catController.getCats);
@@ -12,10 +15,7 @@ router.get('/:catId', catController.getCat);
 
 
 //For POST
-router.post('/', (req,res) => {
-  console.log(req);
-  res.send('With this endpoint you can add cats.')
-});
+router.post('/', upload.single('cat'), catController.createCat);
 
 //For PUT
 router.put('/', (req,res) => {
