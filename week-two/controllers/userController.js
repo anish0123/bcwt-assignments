@@ -28,10 +28,16 @@ const modifyUser = (req, res) => {
     res.send("From this point you can edit some users");
 };
 
-const createUser = (req, res) => {
+const user_create_post = async (req, res) => {
     //console.log(req.body);
-    const userInfo = `username: ${req.body.name}, email: ${req.body.email}`;
-    res.send('Adding new user ' + userInfo);
+    //const userInfo = `username: ${req.body.name}, email: ${req.body.email}`;
+    //res.send('Adding new user ' + userInfo);
+    const addUser = await userModel.addUser(res, req);
+    if(addUser) {
+        res.json(addUser);
+    }else {
+        res.sendStatus(404);
+    }
     
 };
 const deleteUser = (req, res) => {};
@@ -40,6 +46,6 @@ module.exports = {
     getUsers,
     getUser,
     modifyUser,
-    createUser,
+    user_create_post,
     deleteUser
 };

@@ -11,7 +11,7 @@ router.get('/', userController.getUsers);
 //FOR getting single user
 router.get('/:userId', userController.getUser);
 
-router.post('/', userController.createUser);
+router.post('/', userController.user_create_post);
 
 router.put('/', userController.modifyUser);
 

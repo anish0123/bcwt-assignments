@@ -23,7 +23,7 @@ const getCat = async (req, res) => {
 const modifyCat = (req, res) => {};
 const createCat = (req, res) => {
     console.log(req.body);
-    res.send("adding a cat");
+    res.send(req.body);
 };
 const deleteCat = (req, res) => {};
 
