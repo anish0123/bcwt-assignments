@@ -23,8 +23,6 @@ router.put('/', (req,res) => {
 });
 
 //For DELETE
-router.delete('/', (req,res) => {
-  res.send('With this endpoint you can delete cats.')
-});
+router.delete('/:catId', catController.deleteCat);
 
 module.exports = router;

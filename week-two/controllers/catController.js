@@ -29,7 +29,14 @@ const createCat = async (req, res) => {
         res.sendStatus(404);
     }
 };
-const deleteCat = (req, res) => {};
+const deleteCat = async (req, res) => {
+    const deleteCat = await catModel.deleteCat(res, req.params.catId);
+    if(deleteCat){
+        res.send("Cat data deleted");
+    } else {
+        res.sendStatus(404);
+    } 
+};
 
 module.exports = {
     getCat,

@@ -36,8 +36,19 @@ const addCat = async(res, req) => {
     console.error("error", e.message);
   }
 };
+
+const deleteCat = async (res, catId) => {
+  try{
+    let query = `DELETE FROM wop_cat WHERE cat_id=?`;
+    return promisePool.query(query,[catId]);
+  }catch(e) {
+    res.status(500).send(e.message);
+    console.error("error", e.message);
+}
+};
 module.exports = {
   getAllCats,
   getCatById,
-  addCat
+  addCat,
+  deleteCat
 };
