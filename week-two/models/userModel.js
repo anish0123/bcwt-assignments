@@ -32,8 +32,7 @@ const addUser = async(res, req) => {
     res.status(500).send(e.message);
     console.error("error", e.message);
   }
-  
-}
+};
 module.exports = {
   getAllUsers,
   getUserById,
