@@ -46,9 +46,22 @@ const deleteCat = async (res, catId) => {
     console.error("error", e.message);
 }
 };
+
+const updateCat = async(res,req) => {
+  try{
+    console.log(req.body);
+    let query = `UPDATE wop_cat SET name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id = ?`;
+    return promisePool.query(query, [req.body.name, req.body.birthdate, req.body.weight, req.body.owner, req.body.id]);
+  }catch(e) {
+    res.status(500).send(e.message);
+    console.error("error", e.message);
+  }
+};
+
 module.exports = {
   getAllCats,
   getCatById,
   addCat,
-  deleteCat
+  deleteCat,
+  updateCat
 };

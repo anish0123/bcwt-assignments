@@ -20,7 +20,7 @@ const getCat = async (req, res) => {
 };
 
 
-const modifyCat = (req, res) => {};
+
 const createCat = async (req, res) => {
     const addCat = await catModel.addCat(res, req);
     if(addCat) {
@@ -37,11 +37,20 @@ const deleteCat = async (req, res) => {
         res.sendStatus(404);
     } 
 };
+const updateCat = async (req, res) => {
+    const updateCat = await catModel.updateCat(res, req);
+    if(updateCat){
+        res.send("Cat data updated");
+    } else {
+        res.sendStatus(404);
+    } 
+};
+
 
 module.exports = {
     getCat,
     getCats,
-    modifyCat,
     createCat,
     deleteCat,
+    updateCat
 };
