@@ -24,7 +24,7 @@ const getCat = async (req, res) => {
 const createCat = async (req, res) => {
     const addCat = await catModel.addCat(res, req);
     if(addCat) {
-        res.json(addCat);
+        res.status(201).json(addCat);
     }else {
         res.sendStatus(404);
     }
@@ -38,7 +38,11 @@ const deleteCat = async (req, res) => {
     } 
 };
 const updateCat = async (req, res) => {
-    const updateCat = await catModel.updateCat(res, req);
+    const cat = req.body;
+    if(req.params.catId) {
+        cat.id = req.params.catId;
+     }
+    const updateCat = await catModel.updateCat(res, cat);
     if(updateCat){
         res.send("Cat data updated");
     } else {
