@@ -31,6 +31,18 @@ const renderResults = (data) => {
         results.append(img);
         results.append(h3);
         // TODO: render more data from the results
+        const website = document.createElement('a');
+        const link = document.createTextNode("OfficialSite: " + data[i].show.officialSite);
+        website.appendChild(link);
+        website.title = "This is link";
+        website.href = data[i].show.officialSite;
+        results.append(website);
+        const genre = document.createElement('h4');
+        genre.textContent = 'Genres: ' + data[i].show.genres.join(" | ");
+        results.append(genre);
+        const summary = document.createElement('p');
+        summary.innerHTML = 'Summary: ' + data[i].show.summary;
+        results.append(summary);
     }
     
 
