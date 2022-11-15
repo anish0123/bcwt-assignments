@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <tab-panel>
+        <div data-tabname="one">Tab one</div>
+        <div data-tabname="two">Tab two</div>
+        <div data-tabname="three">Tab three</div>
+      </tab-panel>
+      <script>
+        function asTabs(node) {
+          // Your code here.
+    var childElements = document.querySelectorAll('[data-tabname]');
+    var tabs = [];
+
+    for (var i = 0; i < childElements.length; i++) {
+      tabs.push(childElements[i]);
+    }
+    
+    // builds and appends list of <button> elements
+    var buttonDiv = document.createElement('div');
+    tabs.forEach(function(tab, index) {
+      var button = document.createElement('button');
+      var buttonText = document.createTextNode(tab.dataset.tabname);
+      button.appendChild(buttonText);
+      buttonDiv.appendChild(button);
+      button.addEventListener('click', function() {
+        selectTab(index);
+      });
+    });
+    node.insertBefore(buttonDiv, node.firstChild);
+    
+    // function that for displaying the child
+    function selectTab(index) {
+        tabs.forEach(function(tab, i) {
+          if (index == i) {
+            tab.style.display = '';
+          } else {
+            tab.style.display = 'none';
+          }
+        });
+      } 
+      
+    selectTab(0); // to  show first tab at first
+        }
+        asTabs(document.querySelector("tab-panel"));
+      </script>
+</body>
+</html>
