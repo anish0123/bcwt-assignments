@@ -1,6 +1,7 @@
 'use strict';
 // userController
 const userModel = require('../models/userModel');
+const {validationResult} = require('express-validator');
 
 const users = userModel.users;
 
@@ -32,12 +33,19 @@ const user_create_post = async (req, res) => {
     //console.log(req.body);
     //const userInfo = `username: ${req.body.name}, email: ${req.body.email}`;
     //res.send('Adding new user ' + userInfo);
-    const addUser = await userModel.addUser(res, req);
-    if(addUser) {
-        res.json(addUser);
-    }else {
-        res.sendStatus(404);
+    const errors = validationResult(req);
+    console.log('validation errors', errors);
+    if(errors.isEmpty()){
+        const addUser = await userModel.addUser(res, req);
+        res.status(201).json({message: 'user created',
+        userId: addUser});
+        
+    }else{
+        res.status(404).json({message: 'user creation failed', 
+        errors: errors.array()
+    });
     }
+    
     
 };
 const deleteUser = (req, res) => {};
