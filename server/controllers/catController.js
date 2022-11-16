@@ -25,8 +25,12 @@ const getCat = async (req, res) => {
 const createCat = async (req, res) => {
     const errors = validationResult(req);
     console.log('validation errors', errors);
-    //TODO: fix empty file validation 
-    if(errors.isEmpty() && req.file) {
+    //File is empty or missing ( not passing multer's fileFilter in route)
+
+    if(!req.file){
+        res.status(400).json({message: 'cat file not found'})
+
+    }else if(errors.isEmpty()) {
         const addCat = await catModel.addCat(res, req);
         res.status(201).json({message: 'cat created', catId: addCat});
     }else {

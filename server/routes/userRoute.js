@@ -11,11 +11,10 @@ const userController = require('../controllers/userController');
 router.get('/', userController.getUsers)
 .get('/:userId', userController.getUser)
 .post('/', 
-body('name').isLength({min: 3}),
-body('email').isEmail(),  
-body('passwd').isLength({min: 8}), 
+body('name').isLength({min: 3}).trim().escape(),
+body('email').isEmail().normalizeEmail(),  
+body('passwd').isLength({min: 8}).trim(), 
 userController.user_create_post)
-.put('/', userController.modifyUser);
-
+.put('/', userController.modifyUser); //TODO: add validators
 
 module.exports = router;
