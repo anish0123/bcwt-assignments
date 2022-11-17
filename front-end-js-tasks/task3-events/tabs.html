@@ -13,18 +13,22 @@
         <div data-tabname="three">Tab three</div>
       </tab-panel>
       <script>
-        function asTabs(node) {
+        function asTabs(tabPanel) {
           // Your code here.
-    var childElements = document.querySelectorAll('[data-tabname]');
-    var tabs = [];
+    var tabElements = document.querySelectorAll('[data-tabname]');
+    var tabArray = [];
 
-    for (var i = 0; i < childElements.length; i++) {
-      tabs.push(childElements[i]);
-    }
+    var i = 0;
+    do{
+      tabArray.push(tabElements[i]);
+      i++
+    }while (i < tabElements.length)
+    
+
     
     // builds and appends list of <button> elements
     var buttonDiv = document.createElement('div');
-    tabs.forEach(function(tab, index) {
+    tabArray.forEach(function(tab, index) {
       var button = document.createElement('button');
       var buttonText = document.createTextNode(tab.dataset.tabname);
       button.appendChild(buttonText);
@@ -33,11 +37,11 @@
         selectTab(index);
       });
     });
-    node.insertBefore(buttonDiv, node.firstChild);
+    tabPanel.insertBefore(buttonDiv, tabPanel.firstChild);
     
-    // function that for displaying the child
+    // function for displaying the child
     function selectTab(index) {
-        tabs.forEach(function(tab, i) {
+        tabArray.forEach(function(tab, i) {
           if (index == i) {
             tab.style.display = '';
           } else {
