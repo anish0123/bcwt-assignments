@@ -16,6 +16,10 @@ body('name').isLength({min: 3}).trim().escape(),
 body('email').isEmail().normalizeEmail(),  
 body('passwd').isLength({min: 8}).trim(), 
 userController.user_create_post)
-.put('/', userController.modifyUser); //TODO: add validators
+.put('/', 
+body('name').isLength({min: 3}).trim().escape(),
+body('email').isEmail().normalizeEmail(),  
+body('passwd').isLength({min: 8}).trim(),
+userController.modifyUser); //TODO: add validators
 
 module.exports = router;

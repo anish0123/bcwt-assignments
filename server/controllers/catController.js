@@ -46,7 +46,7 @@ const createCat = async (req, res) => {
     
 };
 const deleteCat = async (req, res) => {
-    const deleteCat = await catModel.deleteCatById(res, req.params.catId, req.user.user_id);
+    const deleteCat = await catModel.deleteCatById(res, req.params.catId, req.user);
     if(deleteCat){
         res.status(201).json({message:"Cat data deleted"});
     } else {
@@ -55,16 +55,21 @@ const deleteCat = async (req, res) => {
 };
 const updateCat = async (req, res) => {
     const cat = req.body;
-    cat.owner = req.user.user_id;
     if(req.params.catId) {
         cat.id = req.params.catId;
      }
-    const updateCat = await catModel.updateCat(res, cat, req.user.user_id);
-    if(updateCat){
-        res.send("Cat data updated");
-    } else {
-        res.sendStatus(404);
-    } 
+     if(req.params.owner == cat.owner) {
+        const updateCat = await catModel.updateCat(res, cat, req.user.user_id);
+        if(updateCat){
+            res.status(201).json({message: "Cat data updated"});
+        } else {
+            res.sendStatus(404);
+        } 
+     }else{
+        res.status(201).json({message: "Cat data cannot be updated"});
+     }
+    
+    
 };
 
 

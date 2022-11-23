@@ -25,9 +25,6 @@ const getUser = async (req, res) => {
     }
 }
 
-const modifyUser = (req, res) => {
-    res.send("From this point you can edit some users");
-};
 
 const user_create_post = async (req, res) => {
     //console.log(req.body);
@@ -51,7 +48,18 @@ const user_create_post = async (req, res) => {
 const deleteUser = (req, res) => {};
 const checkToken = (req, res) => {
     res.json({user: req.user})
-}
+};
+const modifyUser = async (req, res) => {
+    const errors = validationResult(req);
+    console.log('validation errors', errors);
+        const updateUser = await userModel.modifyUser(res,req);
+        if(updateUser){
+            res.status(201).json({message: "User data updated"});
+        } else {
+            res.sendStatus(404);
+        } 
+    
+};
 
 module.exports = {
     getUsers,
