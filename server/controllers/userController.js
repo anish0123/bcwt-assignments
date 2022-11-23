@@ -49,11 +49,15 @@ const user_create_post = async (req, res) => {
     
 };
 const deleteUser = (req, res) => {};
+const checkToken = (req, res) => {
+    res.json({user: req.user})
+}
 
 module.exports = {
     getUsers,
     getUser,
     modifyUser,
     user_create_post,
-    deleteUser
+    deleteUser,
+    checkToken
 };

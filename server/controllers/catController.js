@@ -31,7 +31,13 @@ const createCat = async (req, res) => {
         res.status(400).json({message: 'cat file not found'})
 
     }else if(errors.isEmpty()) {
-        const addCat = await catModel.addCat(res, req);
+        const cat = req.body
+        const userId = req.user.user_id;
+        cat.owner = userId;
+        cat.fileName = req.file.fileName;
+        console.log(cat);
+        const addCat = await catModel.addCat(res, cat, req);
+        
         res.status(201).json({message: 'cat created', catId: addCat});
     }else {
         res.status(400).json({message: 'cat creation failed', errors: errors.array()
@@ -40,19 +46,20 @@ const createCat = async (req, res) => {
     
 };
 const deleteCat = async (req, res) => {
-    const deleteCat = await catModel.deleteCat(res, req.params.catId);
+    const deleteCat = await catModel.deleteCatById(res, req.params.catId, req.user.user_id);
     if(deleteCat){
         res.status(201).json({message:"Cat data deleted"});
     } else {
-        res.sendStatus(404);
+        res.sendStatus(401).json({message: "cat cant be deleted"});
     } 
 };
 const updateCat = async (req, res) => {
     const cat = req.body;
+    cat.owner = req.user.user_id;
     if(req.params.catId) {
         cat.id = req.params.catId;
      }
-    const updateCat = await catModel.updateCat(res, cat);
+    const updateCat = await catModel.updateCat(res, cat, req.user.user_id);
     if(updateCat){
         res.send("Cat data updated");
     } else {

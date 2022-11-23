@@ -26,11 +26,11 @@ const getCatById = async (res, catId) => {
 };
 
 // Picture is not being displayed after being uploaded.
-const addCat = async(res, req) => {
+const addCat = async(res, cat, req) => {
   try{
-    console.log(req.body);
+    console.log(cat);
     let query = `INSERT INTO wop_cat(cat_id,name,birthdate,weight,owner,filename) values(?,?,?,?,?,?)`;
-    return promisePool.query(query, [null, req.body.name,req.body.birthdate, req.body.weight, req.body.owner,req.file.filename]);
+    return promisePool.query(query, [null,cat.name,cat.birthdate, cat.weight, cat.owner,req.file.filename]);
   } catch(e) {
     res.status(500).send(e.message);
     console.error("error", e.message);
@@ -47,10 +47,19 @@ const deleteCat = async (res, catId) => {
 }
 };
 
-const updateCat = async(res,cat) => {
+const deleteCatById = async (catId, owner, res) => {
   try{
-    let query = `UPDATE wop_cat SET name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id = ?`;
-    return promisePool.query(query, [cat.name, cat.birthdate, cat.weight, cat.owner, cat.id]);
+    let query = `DELETE FROM wop_cat WHERE cat_id=? AND owner_id=?`;
+    return promisePool.query(query,[catId, owner]);
+  }catch(e) {
+    res.status(500).send(e.message);
+    console.error("error", e.message);
+}
+};
+const updateCat = async(res,cat, owner) => {
+  try{
+    let query = `UPDATE wop_cat SET name = ?, birthdate = ?, weight = ?, owner = ? WHERE cat_id = ? AND owner=?`;
+    return promisePool.query(query, [cat.name, cat.birthdate, cat.weight, cat.owner, cat.id, owner]);
   }catch(e) {
     res.status(500).send(e.message);
     console.error("error", e.message);
@@ -61,6 +70,6 @@ module.exports = {
   getAllCats,
   getCatById,
   addCat,
-  deleteCat,
+  deleteCatById,
   updateCat
 };
