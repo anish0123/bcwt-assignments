@@ -15,6 +15,7 @@ app.use(passport.initialize());
 
 //Server uploaded files
 app.use(express.static("uploads"));
+app.use('/thumbnails', express.static('thumbnails'));
 
 app.use('/auth', authRouter);
 

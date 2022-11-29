@@ -26,11 +26,11 @@ const getCatById = async (res, catId) => {
 };
 
 // Picture is not being displayed after being uploaded.
-const addCat = async(res, cat, req) => {
+const addCat = async(res, cat) => {
   try{
     console.log(cat);
-    let query = `INSERT INTO wop_cat(cat_id,name,birthdate,weight,owner,filename) values(?,?,?,?,?,?)`;
-    return promisePool.query(query, [null,cat.name,cat.birthdate, cat.weight, cat.owner,req.file.filename]);
+    let query = `INSERT INTO wop_cat(cat_id,name,birthdate,weight,owner,filename,coords) values(?,?,?,?,?,?,?)`;
+    return promisePool.query(query, [null,cat.name,cat.birthdate, cat.weight, cat.owner,cat.filename, cat.coords]);
   } catch(e) {
     res.status(500).send(e.message);
     console.error("error", e.message);

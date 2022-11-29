@@ -2,6 +2,7 @@
 // catController
 const catModel = require('../models/catModel');
 const {validationResult} = require('express-validator');
+const {makeThumbnail} = require('../utils/image');
 
 //For getting whole array of cats
 const getCats = async (req, res) => {
@@ -31,12 +32,17 @@ const createCat = async (req, res) => {
         res.status(400).json({message: 'cat file not found'})
 
     }else if(errors.isEmpty()) {
+
+        //TODO: fix fileName in thumbnails
+        await makeThumbnail(req.file.path, req.file.filename);
+        //TODO: use image.js/getCoord to extract exif-data/gps coords and add
+        //to the cat object as cat.coords property in array format
         const cat = req.body
         const userId = req.user.user_id;
         cat.owner = userId;
-        cat.fileName = req.file.fileName;
+        cat.filename = req.file.filename;
         console.log(cat);
-        const addCat = await catModel.addCat(res, cat, req);
+        const addCat = await catModel.addCat(res, cat);
         
         res.status(201).json({message: 'cat created', catId: addCat});
     }else {
