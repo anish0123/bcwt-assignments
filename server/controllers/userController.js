@@ -47,6 +47,7 @@ const user_create_post = async (req, res) => {
 };
 const deleteUser = (req, res) => {};
 const checkToken = (req, res) => {
+    delete req.user.password;
     res.json({user: req.user})
 };
 const modifyUser = async (req, res) => {
