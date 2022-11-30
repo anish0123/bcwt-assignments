@@ -8,7 +8,18 @@ const getCoordinates = (imgFile) => {
     try {
       // TODO: Use node-exif to get longitude and latitude from imgFile
       // coordinates below should be an array of GPS coordinates in decimal format: [longitude, latitude]
-      resolve(coordinates);
+      new ExifImage({ image : imgFile}, (error, exifData) => {
+        let coordinates;
+        if (error) {
+            console.log('Error: '+error.message);
+        }else {
+            // console.log(exifData); // Do something with your data!
+            const decimallon = gpsToDecimal(exifData.gps.GPSLongitude, exifData.gps.GPSLongitudeRef);
+            const decimallat = gpsToDecimal(exifData.gps.GPSLatitude, exifData.gps.GPSLatitudeRef);
+            coordinates = [decimallon,decimallat];
+        }
+        resolve(coordinates);
+    });
     } catch (error) {
       reject(error);
     }
