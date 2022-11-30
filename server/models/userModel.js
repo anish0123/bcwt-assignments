@@ -48,11 +48,9 @@ const addUser = async(res, req) => {
 };
 
 
-const modifyUser = async(res,req) => {
+const modifyUser = async(res, req) => {
   try{
     const user = req.body;
-    console.log(user);
-    console.log(user.user_id);
     let query = `UPDATE wop_user SET name = ?, email = ?, password = ? WHERE user_id = ?;`;
     return promisePool.query(query, [user.name, user.email, user.passwd, req.user.user_id]);
   }catch(e) {

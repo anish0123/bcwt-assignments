@@ -50,6 +50,26 @@ const register = async (req, res) => {
   });
   }
 };
+
+// TODO work on adding hash value on the password while modifying the user
+const modifyUser = async (req, res) => {
+  const errors = validationResult(req);
+  console.log('validation errors', errors);
+  const salt = await bcrypt.genSalt();
+  const passwordHash = await bcrypt.hash(req.body.passwd, salt);
+  req.body.passwd = passwordHash;
+  console.log(req.body.user_id);
+      const updateUser = await userModel.modifyUser(res,req);
+      if(updateUser){
+          res.status(201).json({message: "User data updated"});
+      } else {
+          res.sendStatus(404).json({message: 'user creation failed', 
+          errors: errors.array()
+      });
+      } 
+  
+};
+
 const logout = (req, res) => {
   console.log('some user logged out');
   res.json({message: 'logged out'});
@@ -58,5 +78,6 @@ const logout = (req, res) => {
 module.exports = {
   login,
   register,
-  logout
+  logout,
+  modifyUser
 };

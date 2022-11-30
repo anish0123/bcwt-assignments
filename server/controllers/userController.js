@@ -2,6 +2,7 @@
 // userController
 const userModel = require('../models/userModel');
 const {validationResult} = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 const users = userModel.users;
 
@@ -53,6 +54,10 @@ const checkToken = (req, res) => {
 const modifyUser = async (req, res) => {
     const errors = validationResult(req);
     console.log('validation errors', errors);
+    // added password hash
+    const salt = await bcrypt.genSalt();
+  const passwordHash = await bcrypt.hash(req.body.passwd, salt);
+  req.body.passwd = passwordHash;
         const updateUser = await userModel.modifyUser(res,req);
         if(updateUser){
             res.status(201).json({message: "User data updated"});
